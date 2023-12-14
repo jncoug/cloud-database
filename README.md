@@ -1,67 +1,26 @@
-import firebase_admin
+# Overview
 
-from firebase_admin import credentials, db
+Hi! Im Joseph, and I wanted to use a cloud database system.
 
-cred = credentials.Certificate(".gitignore/key.json")
+I created a script in python and a Realtime database in Firebase to store data for note taking.
 
-firebase_admin.initialize_app(
-    cred, {"databaseURL": "https://notes-database-182af-default-rtdb.firebaseio.com/"}
-)
+I wanted to make this app to see how to create a cloud database. I had used SQL before, and wanted to see how a cloud database would be different.
 
-# reference
-ref = db.reference("/")
+[Software Demo Video](https://youtu.be/yA1MlqoBah0)
 
+# Development Environment
 
-# get note details
-def create_note():
-    title = input("Note Title: ")
-    content = input("Note Content: ")
-    note_data = {
-        "title": title,
-        "content": content,
-    }
-    return note_data
+I used VS Code and Google Firebase
 
+I used python and firebase console
 
-# add a node called notes and add an object
-def add_note(note_data):
-    new_note_ref = ref.child("notes").push(note_data)
+# Useful Websites
+
+* [Youtube](https://www.youtube.com)
+* [Firebase]("https://console.firebase.com")
+
+# Future Work
+* add more nodes for data, id like to create a database to store statistics for professional pickleball.
+* Create a better interface to track stats
 
 
-# read the data
-def get_notes():
-    return ref.child("notes").get()
-
-
-# print notes
-def print_notes(snapshot):
-    if snapshot:
-        print("Notes")
-        for key, value in snapshot.items():
-            print(f"{key}: {value}")
-    else:
-        print("No notes available, create a new one!")
-
-
-# delete the notes data
-def delete_notes():
-    ref.child("notes").delete()
-
-
-# main loop
-
-x = 1
-while True:
-    x = int(input("1: Create Note \n2: Read Notes \n3: Delete Notes \n0: Quit \n"))
-    if x == 0:
-        break
-    elif x == 1:
-        note = create_note()
-        add_note(note)
-    elif x == 2:
-        notes = get_notes()
-        print_notes(notes)
-    elif x == 3:
-        delete_notes()
-    else:
-        print("Oops, try again.")
